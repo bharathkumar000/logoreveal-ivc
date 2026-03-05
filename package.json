@@ -1,0 +1,13 @@
+{
+  "name": "ivc-logo-reveal",
+  "version": "1.0.0",
+  "description": "High-end scrollytelling experience for IVC logo reveal",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "vite": "latest"
+  }
+}
