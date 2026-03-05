@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IVC Logo Reveal | Innovators and Visionaries Club</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Michroma&family=Syncopate:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <div class="scroll-container">
+        <!-- Background Gear Parallax -->
+        <div class="parallax-bg">
+            <div class="gear gear-1"></div>
+            <div class="gear gear-2"></div>
+            <div class="gear gear-3"></div>
+        </div>
+
+        <!-- Section 1 & 2: Curtains with Countdown Overlay -->
+        <section class="section stage-section">
+            <!-- The Background Curtains/Shutters -->
+            <div class="shutter left-shutter"></div>
+            <div class="shutter right-shutter"></div>
+
+            <!-- The Countdown overlaid on the curtains -->
+            <div class="countdown-container">
+                <div class="number" id="num-3">3</div>
+                <div class="number" id="num-2">2</div>
+                <div class="number" id="num-1">1</div>
+            </div>
+
+            <div class="reveal-glow"></div>
+        </section>
+
+        <!-- Section 3: Logo Assembly -->
+        <section class="section logo-section">
+            <div class="logo-viewport">
+                <div class="glass-container">
+                    <div class="logo-parts">
+                        <div class="part gear-frame">
+                            <img src="gear_frame.png" alt="Gear Frame">
+                        </div>
+                        <div class="part central-content">
+                            <img src="brain_icon.png" class="logo-icon brain" alt="Brain">
+                            <img src="bulb_icon.png" class="logo-icon bulb" alt="Lightbulb">
+                            <img src="wrench_icon.png" class="logo-icon wrench" alt="Wrench">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Typography -->
+        <section class="section typography-section">
+            <div class="text-container">
+                <h1 class="main-title">
+                    <span class="word">INNOVATORS</span>
+                    <span class="word">AND</span>
+                    <span class="word">VISIONARIES</span>
+                    <span class="word">CLUB</span>
+                </h1>
+                <p class="tagline">IDEATE. VISUALIZE. CREATE.</p>
+            </div>
+        </section>
+
+        <!-- Scroll Hint -->
+        <div class="scroll-hint">
+            <span>SCROLL TO START REVEAL</span>
+            <div class="mouse"></div>
+        </div>
+    </div>
+
+    <!-- Spotlight Element -->
+    <div class="spotlight"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
