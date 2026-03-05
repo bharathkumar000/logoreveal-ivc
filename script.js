@@ -88,20 +88,23 @@ function spawnAmbient(minX, maxX) {
 }
 
 function createAmbientSpark() {
-    // Spawn multiple sparks per tick for high density
-    for (let i = 0; i < 2; i++) {
-        // Side flow - explicitly balanced
-        spawnAmbient(0, window.innerWidth * 0.25); // LEFT EDGE
-        spawnAmbient(window.innerWidth * 0.75, window.innerWidth); // RIGHT EDGE
+    // High-density ambient sparks (increased loop to 4 for inauguration feel)
+    for (let i = 0; i < 4; i++) {
+        // Explicitly heavy on the LEFT EDGE as requested
+        spawnAmbient(0, window.innerWidth * 0.35);
+        spawnAmbient(0, window.innerWidth * 0.20); // Extra Left layer
 
-        // Dedicated Middle Flow (Center 50% of screen)
-        const middleWidth = window.innerWidth * 0.5;
+        // Right Edge
+        spawnAmbient(window.innerWidth * 0.8, window.innerWidth);
+
+        // Wide Center Atmosphere (Center 60%)
+        const middleWidth = window.innerWidth * 0.6;
         const middleStart = (window.innerWidth - middleWidth) / 2;
         spawnAmbient(middleStart, middleStart + middleWidth);
     }
 
-    // Faster timing for a much more populated feel
-    setTimeout(createAmbientSpark, 150 + Math.random() * 250);
+    // Fast but steady timing for an immersive feel
+    setTimeout(createAmbientSpark, 200 + Math.random() * 300);
 }
 
 createAmbientSpark();
@@ -114,7 +117,7 @@ const tl = gsap.timeline({
         trigger: "#spacer",
         start: "top top",
         end: "bottom bottom",
-        scrub: 2,
+        scrub: 3.5, // Increased scrub for slowed-down, majestic inauguration feel
     }
 });
 
