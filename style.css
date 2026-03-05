@@ -65,16 +65,15 @@ body {
     position: absolute;
     bottom: -15%;
     width: 200%;
-    height: 35%;
+    height: 40%;
     background:
-        linear-gradient(to top, rgba(0, 229, 255, 0.12) 0%, transparent 100%),
-        radial-gradient(ellipse at bottom, rgba(0, 229, 255, 0.08) 0%, transparent 80%);
+        linear-gradient(to top, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
     transform: perspective(1200px) rotateX(65deg);
     z-index: 1;
-    border-top: none;
-    /* Removed the division line */
-    box-shadow: 0 -80px 200px rgba(0, 229, 255, 0.05);
-    /* Softer ambient glow */
+    /* Soften the top edge with a mask to remove the sharp line */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%);
+    mask-image: linear-gradient(to bottom, transparent, black 30%);
+    pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════
@@ -125,7 +124,7 @@ body {
     /* Reduced from 28rem */
     font-weight: 700;
     color: #fff;
-    text-shadow: 0 0 40px var(--cyan), 0 0 80px var(--cyan-glow);
+    text-shadow: 0 0 15px var(--cyan), 0 0 30px var(--cyan-glow);
     opacity: 0;
     transform: scale(0.5);
 }
