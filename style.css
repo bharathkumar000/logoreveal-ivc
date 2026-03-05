@@ -1,0 +1,274 @@
+:root {
+    --bg: #050a0f;
+    --cyan: #00e5ff;
+    --cyan-glow: rgba(0, 229, 255, 0.5);
+    --dark-panel: #0c1520;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   VIEWPORT – fixed full screen container
+   ═══════════════════════════════════════════════ */
+#viewport {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Spacer gives us scroll room */
+#spacer {
+    height: 500vh;
+}
+
+/* ═══════════════════════════════════════════════
+   BACKGROUND GRID
+   ═══════════════════════════════════════════════ */
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   CURTAINS
+   ═══════════════════════════════════════════════ */
+.curtain {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 10;
+    /* Dark fabric folds via repeating gradients */
+    background:
+        repeating-linear-gradient(90deg,
+            #0a1520 0px,
+            #0e1c2a 15px,
+            #091318 30px,
+            #0d1a28 50px,
+            #081017 65px,
+            #0c1825 80px);
+    /* Subtle shadow to create depth at edges */
+    box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.7);
+}
+
+#left-curtain {
+    left: 0;
+    border-right: 1px solid rgba(0, 229, 255, 0.08);
+    /* Inner light from the right side */
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.3) 0%, transparent 40%, rgba(0, 229, 255, 0.03) 100%),
+        repeating-linear-gradient(90deg,
+            #0a1520 0px,
+            #0e1c2a 15px,
+            #091318 30px,
+            #0d1a28 50px,
+            #081017 65px,
+            #0c1825 80px);
+}
+
+#right-curtain {
+    right: 0;
+    border-left: 1px solid rgba(0, 229, 255, 0.08);
+    /* Inner light from the left side */
+    background:
+        linear-gradient(270deg, rgba(0, 0, 0, 0.3) 0%, transparent 40%, rgba(0, 229, 255, 0.03) 100%),
+        repeating-linear-gradient(90deg,
+            #0c1825 0px,
+            #081017 15px,
+            #0d1a28 30px,
+            #091318 50px,
+            #0e1c2a 65px,
+            #0a1520 80px);
+}
+
+/* ═══════════════════════════════════════════════
+   COUNTDOWN
+   ═══════════════════════════════════════════════ */
+#countdown {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.count-num {
+    position: absolute;
+    font-family: 'Syncopate', sans-serif;
+    font-size: 20rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 30px var(--cyan), 0 0 60px var(--cyan-glow);
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.count-num.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ═══════════════════════════════════════════════
+   LOGO AREA
+   ═══════════════════════════════════════════════ */
+#logo-area {
+    position: absolute;
+    z-index: 5;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.glass-ring {
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.04);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow:
+        0 0 60px rgba(0, 229, 255, 0.1),
+        inset 0 0 40px rgba(0, 229, 255, 0.05);
+}
+
+.gear-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+}
+
+.icon-img {
+    position: absolute;
+    object-fit: contain;
+    opacity: 0;
+    filter: drop-shadow(0 0 15px var(--cyan));
+}
+
+.brain-img {
+    width: 40%;
+    z-index: 3;
+}
+
+.bulb-img {
+    width: 25%;
+    top: 15%;
+    z-index: 2;
+}
+
+.wrench-img {
+    width: 25%;
+    bottom: 15%;
+    transform: rotate(-45deg);
+    z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════
+   TITLE
+   ═══════════════════════════════════════════════ */
+#title-area {
+    position: absolute;
+    bottom: 12%;
+    text-align: center;
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+#main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.6rem;
+    color: #fff;
+    text-shadow: 0 0 20px var(--cyan-glow);
+    margin-bottom: 1rem;
+}
+
+#tagline {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.8rem;
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+}
+
+/* ═══════════════════════════════════════════════
+   SCROLL HINT
+   ═══════════════════════════════════════════════ */
+#scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 30;
+    color: var(--cyan);
+    font-size: 0.7rem;
+    letter-spacing: 0.3rem;
+    opacity: 0.8;
+}
+
+.scroll-mouse {
+    width: 22px;
+    height: 36px;
+    border: 2px solid var(--cyan);
+    border-radius: 14px;
+    position: relative;
+    box-shadow: 0 0 8px var(--cyan-glow);
+}
+
+.scroll-mouse::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 7px;
+    background: var(--cyan);
+    border-radius: 2px;
+    animation: mouse-scroll 1.8s infinite;
+}
+
+@keyframes mouse-scroll {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 14px);
+    }
+}
