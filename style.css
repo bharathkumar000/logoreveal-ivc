@@ -39,16 +39,42 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   BACKGROUND GRID
+   ENVIRONMENT ELEMENTS
    ═══════════════════════════════════════════════ */
 .bg-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+        linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
     z-index: 0;
+    opacity: 0.5;
+}
+
+.vignette {
+    position: absolute;
+    inset: 0;
+    /* Large transparent center (60%) to ensure center content is perfectly clear */
+    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.95) 100%);
+    pointer-events: none;
+    z-index: 50;
+}
+
+#stage-floor {
+    position: absolute;
+    bottom: -15%;
+    width: 200%;
+    height: 35%;
+    background:
+        linear-gradient(to top, rgba(0, 229, 255, 0.12) 0%, transparent 100%),
+        radial-gradient(ellipse at bottom, rgba(0, 229, 255, 0.08) 0%, transparent 80%);
+    transform: perspective(1200px) rotateX(65deg);
+    z-index: 1;
+    border-top: none;
+    /* Removed the division line */
+    box-shadow: 0 -80px 200px rgba(0, 229, 255, 0.05);
+    /* Softer ambient glow */
 }
 
 /* ═══════════════════════════════════════════════
@@ -56,13 +82,15 @@ body {
    ═══════════════════════════════════════════════ */
 .curtain {
     position: absolute;
-    top: 0;
-    width: 52%;
-    height: 100%;
+    top: -5%;
+    width: 55%;
+    height: 115%;
     z-index: 10;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    will-change: transform;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
 }
 
 #left-curtain {
@@ -94,9 +122,10 @@ body {
     position: absolute;
     font-family: 'Syncopate', sans-serif;
     font-size: 20rem;
+    /* Reduced from 28rem */
     font-weight: 700;
     color: #fff;
-    text-shadow: 0 0 30px var(--cyan), 0 0 60px var(--cyan-glow);
+    text-shadow: 0 0 40px var(--cyan), 0 0 80px var(--cyan-glow);
     opacity: 0;
     transform: scale(0.5);
 }
@@ -118,8 +147,9 @@ body {
 }
 
 .glass-ring {
-    width: 550px;
-    height: 550px;
+    width: 650px;
+    /* Increased size */
+    height: 650px;
     border-radius: 50%;
     background: transparent;
     border: none;
@@ -134,8 +164,9 @@ body {
     height: 100%;
     object-fit: contain;
     image-rendering: -webkit-optimize-contrast;
+    /* Sharpened via increased contrast and brightness balance */
     filter:
-        drop-shadow(0 0 30px rgba(0, 229, 255, 0.4)) contrast(1.08) brightness(1.05);
+        drop-shadow(0 0 35px rgba(0, 229, 255, 0.4)) contrast(1.15) brightness(1.1);
 }
 
 /* ═══════════════════════════════════════════════
@@ -143,7 +174,8 @@ body {
    ═══════════════════════════════════════════════ */
 #title-area {
     position: absolute;
-    bottom: 12%;
+    bottom: 15%;
+    width: 100%;
     text-align: center;
     z-index: 5;
     opacity: 0;
@@ -152,21 +184,26 @@ body {
 
 #main-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
+    /* Reduced to fit one line */
     font-weight: 700;
-    letter-spacing: 0.6rem;
+    letter-spacing: 0.4rem;
+    /* Tightened slightly */
     color: #fff;
-    text-shadow: 0 0 20px var(--cyan-glow);
+    text-shadow: 0 0 30px var(--cyan-glow);
     margin-bottom: 1rem;
+    white-space: nowrap;
+    /* Force one line */
 }
 
 #tagline {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    /* Proportional to title */
     font-weight: 400;
-    letter-spacing: 0.8rem;
+    letter-spacing: 1rem;
     color: var(--cyan);
-    text-shadow: 0 0 10px var(--cyan);
+    text-shadow: 0 0 15px var(--cyan);
 }
 
 /* ═══════════════════════════════════════════════
@@ -218,4 +255,28 @@ body {
         opacity: 0;
         transform: translate(-50%, 14px);
     }
+}
+
+/* ═══════════════════════════════════════════════
+   SPARK PARTICLES
+   ═══════════════════════════════════════════════ */
+.spark {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 150;
+    /* Extra glow for the 'bloom' effect */
+    box-shadow:
+        0 0 4px #fff,
+        0 0 8px currentColor,
+        0 0 15px currentColor,
+        0 0 30px rgba(0, 229, 255, 0.2);
+    filter: blur(0.4px);
+    will-change: transform, opacity;
+}
+
+/* Spark Enhancements */
+.spark {
+    filter: blur(0.5px);
+    will-change: transform, opacity;
 }
