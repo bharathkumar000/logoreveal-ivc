@@ -1,3 +1,12 @@
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+// Force scroll to top on every refresh for start of animation
+if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
+
 /* ═══════════════════════════════════════════════
    SPARK PARTICLES SYSTEM (OPTIMIZED FOR SMOOTHNESS)
    ═══════════════════════════════════════════════ */
@@ -98,15 +107,14 @@ createAmbientSpark();
 /* ═══════════════════════════════════════════════
    MASTER TIMELINE
    ═══════════════════════════════════════════════ */
-// Master Timeline - now automatic instead of scroll-triggered, paused by default
-const tl = gsap.timeline({ paused: true });
-
-// Event listener for Enter key to start countdown
-window.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        tl.play();
+const tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: "#spacer",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2, // Smooth but responsive
     }
-}, { once: true }); // Only trigger once
+});
 
 tl.to("#num3", {
     opacity: 0, scale: 2.5, duration: 1,
@@ -167,34 +175,28 @@ tl.to("#left-curtain", {
         force3D: true,
         onStart: () => createSparkBurst(30, window.innerWidth, 0)
     }, "<");
-/* ─── Phase 4a : Center spark burst (anticipation) ─── */
+
 tl.add(() => {
-    // Wave 1: Tight center cluster
     createSparkBurst(40, window.innerWidth / 2, window.innerHeight / 2, 300);
-    // Wave 2: Medium spread (slightly delayed)
     setTimeout(() => createSparkBurst(40, window.innerWidth / 2, window.innerHeight / 2, 500), 200);
-    // Wave 3: Wide spread
     setTimeout(() => createSparkBurst(40, window.innerWidth / 2, window.innerHeight / 2, 700), 400);
 });
 
-/* ─── Phase 4b : Pause for spark buildup ─── */
-tl.to({}, { duration: 2 }); // 2-second delay while sparks shimmer
+tl.to({}, { duration: 2 });
 
-/* ─── Phase 4c : Logo reveal (after sparks) ─── */
 tl.to("#logo-area", {
     opacity: 1,
     scale: 1,
     duration: 1.5,
 });
 
-/* ─── Phase 4d : Logo unblur ─── */
 tl.to("#logo-area", {
     filter: "blur(0px)",
     duration: 1,
     ease: "power1.inOut"
 });
 
-tl.to("#logo-area", { y: -80, scale: 0.85, duration: 2 })
+tl.to("#logo-area", { y: -40, scale: 1, duration: 2 })
     .to("#title-area", {
         opacity: 1,
         y: 0,
@@ -204,3 +206,14 @@ tl.to("#logo-area", { y: -80, scale: 0.85, duration: 2 })
             createSparkBurst(30, window.innerWidth / 2, window.innerHeight * 0.7, 400);
         }
     }, "<");
+
+// Event listener for Enter key to trigger automatic scroll
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        gsap.to(window, {
+            scrollTo: { y: document.body.scrollHeight, autoKill: false },
+            duration: 12, // The total time for the automatic reveal
+            ease: "power1.inOut"
+        });
+    }
+}, { once: true });

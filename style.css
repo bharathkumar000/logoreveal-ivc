@@ -15,8 +15,8 @@ body {
     background: var(--bg);
     color: #fff;
     font-family: 'Orbitron', sans-serif;
-    overflow: hidden;
-    /* Prevent scrolling */
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* ═══════════════════════════════════════════════
@@ -150,9 +150,9 @@ body {
 }
 
 .glass-ring {
-    width: 800px;
-    height: 800px;
-    /* Increased size */
+    width: 400px;
+    height: 400px;
+    /* Balanced size for HD screens */
     border-radius: 50%;
     background: transparent;
     border: none;
@@ -177,7 +177,7 @@ body {
    ═══════════════════════════════════════════════ */
 #title-area {
     position: absolute;
-    bottom: 15%;
+    bottom: 12%;
     width: 100%;
     text-align: center;
     z-index: 5;
@@ -187,8 +187,8 @@ body {
 
 #main-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.4rem;
-    /* Reduced to fit one line */
+    font-size: 2.22rem;
+    /* Optimized for clarity on one line */
     font-weight: 700;
     letter-spacing: 0.4rem;
     /* Tightened slightly */
