@@ -99,14 +99,7 @@ createAmbientSpark();
    MASTER TIMELINE
    ═══════════════════════════════════════════════ */
 // Master Timeline - now automatic instead of scroll-triggered, paused by default
-const tl = gsap.timeline({
-    scrollTrigger: {
-        trigger: "#spacer",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 2, // Smooth but responsive
-    }
-});
+const tl = gsap.timeline({ paused: true });
 
 // Event listener for Enter key to start countdown
 window.addEventListener('keydown', (e) => {
@@ -201,7 +194,7 @@ tl.to("#logo-area", {
     ease: "power1.inOut"
 });
 
-tl.to("#logo-area", { y: -50, scale: 0.65, duration: 2 })
+tl.to("#logo-area", { y: -80, scale: 0.85, duration: 2 })
     .to("#title-area", {
         opacity: 1,
         y: 0,
