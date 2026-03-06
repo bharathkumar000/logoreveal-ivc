@@ -31,11 +31,13 @@ body {
     justify-content: center;
     overflow: hidden;
     z-index: 1;
+    will-change: transform;
+    /* GPU layer promotion */
 }
 
-/* Spacer gives us scroll room (increased to 1000vh for slow inauguration) */
+/* Spacer gives us scroll room (2000vh for maximum inauguration suspense) */
 #spacer {
-    height: 1000vh;
+    height: 2000vh;
 }
 
 /* ═══════════════════════════════════════════════
@@ -55,8 +57,8 @@ body {
 .vignette {
     position: absolute;
     inset: 0;
-    /* Large transparent center (60%) to ensure center content is perfectly clear */
-    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.95) 100%);
+    /* Lighter edges so sparks are visible on both sides */
+    background: radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
     pointer-events: none;
     z-index: 50;
 }
@@ -89,7 +91,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     will-change: transform;
-    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.5));
+    transform: translateZ(0);
+    /* Force GPU layer */
 }
 
 #left-curtain {
@@ -257,53 +260,16 @@ body {
 }
 
 /* ═══════════════════════════════════════════════
-   SPARK PARTICLES
+   SPARK PARTICLES (PERFORMANCE OPTIMIZED)
    ═══════════════════════════════════════════════ */
 .spark {
     position: absolute;
     border-radius: 50%;
     pointer-events: none;
     z-index: 150;
-    /* Extra glow for the 'bloom' effect */
-    box-shadow:
-        0 0 4px #fff,
-        0 0 8px currentColor,
-        0 0 15px currentColor,
-        0 0 30px rgba(0, 229, 255, 0.2);
-    filter: blur(0.4px);
+    /* Single lightweight glow instead of 4 heavy layers */
+    box-shadow: 0 0 6px currentColor;
     will-change: transform, opacity;
-}
-
-/* ═══════════════════════════════════════════════
-   MOBILE RESPONSIVENESS
-   ═══════════════════════════════════════════════ */
-@media (max-width: 768px) {
-    .glass-ring {
-        width: 85vw;
-        height: 85vw;
-    }
-
-    .count-num {
-        font-size: 10rem;
-    }
-
-    #main-title {
-        font-size: 1.1rem;
-        letter-spacing: 0.15rem;
-    }
-
-    #tagline {
-        font-size: 0.65rem;
-        letter-spacing: 0.4rem;
-    }
-
-    #title-area {
-        bottom: 20%;
-    }
-}
-
-/* Spark Enhancements */
-.spark {
-    filter: blur(0.5px);
-    will-change: transform, opacity;
+    contain: layout style;
+    /* CSS containment for paint optimization */
 }
