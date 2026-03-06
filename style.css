@@ -150,8 +150,8 @@ body {
 }
 
 .glass-ring {
-    width: 400px;
-    height: 400px;
+    width: 360px;
+    height: 360px;
     /* Balanced size for HD screens */
     border-radius: 50%;
     background: transparent;
