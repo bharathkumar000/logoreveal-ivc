@@ -36,7 +36,10 @@ body {
     /* GPU layer promotion */
 }
 
-/* Spacer removed as scrolling is now automatic */
+/* Spacer gives us scroll room */
+#spacer {
+    height: 1200vh;
+}
 
 /* ═══════════════════════════════════════════════
    ENVIRONMENT ELEMENTS
@@ -147,9 +150,8 @@ body {
 }
 
 .glass-ring {
-    width: 650px;
-    /* Increased size */
-    height: 650px;
+    width: 720px;
+    height: 720px;
     border-radius: 50%;
     background: transparent;
     border: none;
