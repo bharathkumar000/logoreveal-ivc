@@ -207,13 +207,68 @@ tl.to("#logo-area", { y: -40, scale: 1, duration: 2 })
         }
     }, "<");
 
-// Event listener for Enter key to trigger automatic scroll
+// Track the auto-scroll tween so we can kill it on reset
+let autoScrollTween = null;
+let isAnimating = false;
+
+function resetAnimation() {
+    // Kill any running auto-scroll
+    if (autoScrollTween) {
+        autoScrollTween.kill();
+        autoScrollTween = null;
+    }
+
+    // Remove any lingering spark elements
+    document.querySelectorAll('.spark').forEach(s => s.remove());
+
+    // Instantly scroll to top
+    window.scrollTo(0, 0);
+
+    // Reset the ScrollTrigger so it re-reads the scroll position
+    ScrollTrigger.refresh();
+
+    // Reset all animated elements to their initial CSS states
+    gsap.set("#num3", { opacity: 1, scale: 1 });
+    gsap.set("#num2", { opacity: 0, scale: 0.5 });
+    gsap.set("#num1", { opacity: 0, scale: 0.5 });
+    gsap.set("#countdown", { opacity: 1 });
+    gsap.set("#left-curtain", { xPercent: 0, yPercent: 0, scaleX: 1, scaleY: 1, rotation: 0 });
+    gsap.set("#right-curtain", { xPercent: 0, yPercent: 0, scaleX: 1, scaleY: 1, rotation: 0 });
+    gsap.set("#logo-area", { opacity: 0, scale: 0.5, filter: "blur(20px)", y: 0 });
+    gsap.set("#title-area", { opacity: 0, y: 40 });
+}
+
+function startAnimation() {
+    // Small delay to let the scroll reset settle before auto-scrolling
+    setTimeout(() => {
+        autoScrollTween = gsap.to(window, {
+            scrollTo: { y: document.body.scrollHeight, autoKill: false },
+            duration: 15,
+            ease: "power1.inOut",
+            onComplete: () => {
+                isAnimating = false;
+            }
+        });
+    }, 100);
+}
+
+// Event listener for Enter key — repeatable
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        gsap.to(window, {
-            scrollTo: { y: document.body.scrollHeight, autoKill: false },
-            duration: 12, // The total time for the automatic reveal
-            ease: "power1.inOut"
-        });
+        if (isAnimating) {
+            // If already animating, reset first then replay
+            resetAnimation();
+            // Give a brief moment for reset to apply
+            setTimeout(() => {
+                isAnimating = true;
+                startAnimation();
+            }, 200);
+        } else {
+            isAnimating = true;
+            resetAnimation();
+            setTimeout(() => {
+                startAnimation();
+            }, 200);
+        }
     }
-}, { once: true });
+});
