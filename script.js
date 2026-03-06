@@ -1,12 +1,3 @@
-gsap.registerPlugin(ScrollTrigger);
-
-// Force scroll to top on every refresh for start of animation
-if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
-}
-window.scrollTo(0, 0);
-
-
 /* ═══════════════════════════════════════════════
    SPARK PARTICLES SYSTEM (OPTIMIZED FOR SMOOTHNESS)
    ═══════════════════════════════════════════════ */
@@ -59,8 +50,6 @@ function createSparkBurst(count, centerX, centerY, spread = 400) {
 }
 
 // Optimized ambient spark
-// IMPORTANT: #viewport uses flexbox centering, so x:0 = CENTER of screen.
-// We offset by -innerWidth/2 so x:0 maps to the actual LEFT edge.
 function spawnAmbient(minX, maxX) {
     const colors = ['#00e5ff', '#ffffff', '#80deea'];
     const container = document.getElementById('viewport');
@@ -83,7 +72,7 @@ function spawnAmbient(minX, maxX) {
         backgroundColor: colors[Math.floor(Math.random() * colors.length)],
         opacity: 0,
         scale: 0.5,
-        force3D: true // GPU acceleration
+        force3D: true
     });
 
     gsap.to(spark, {
@@ -91,19 +80,16 @@ function spawnAmbient(minX, maxX) {
         x: startX + (Math.random() - 0.5) * 100,
         opacity: 0.7,
         scale: 1,
-        duration: 3 + Math.random() * 3, // Shorter lifetime = fewer active elements
+        duration: 3 + Math.random() * 3,
         ease: "none",
-        onComplete: () => spark.remove() // Instant cleanup, no fade delay
+        onComplete: () => spark.remove()
     });
 }
 
 function createAmbientSpark() {
-    // 3 sparks per tick, balanced across screen (Left, Center, Right)
-    spawnAmbient(0, window.innerWidth * 0.3);          // LEFT
-    spawnAmbient(window.innerWidth * 0.35, window.innerWidth * 0.65); // CENTER
-    spawnAmbient(window.innerWidth * 0.7, window.innerWidth);         // RIGHT
-
-    // Spaced out for smooth performance (~3 sparks every 500-800ms)
+    spawnAmbient(0, window.innerWidth * 0.3);
+    spawnAmbient(window.innerWidth * 0.35, window.innerWidth * 0.65);
+    spawnAmbient(window.innerWidth * 0.7, window.innerWidth);
     setTimeout(createAmbientSpark, 500 + Math.random() * 300);
 }
 
@@ -112,6 +98,7 @@ createAmbientSpark();
 /* ═══════════════════════════════════════════════
    MASTER TIMELINE
    ═══════════════════════════════════════════════ */
+// Master Timeline - now automatic instead of scroll-triggered, paused by default
 const tl = gsap.timeline({
     scrollTrigger: {
         trigger: "#spacer",
@@ -120,6 +107,13 @@ const tl = gsap.timeline({
         scrub: 2, // Smooth but responsive
     }
 });
+
+// Event listener for Enter key to start countdown
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        tl.play();
+    }
+}, { once: true }); // Only trigger once
 
 tl.to("#num3", {
     opacity: 0, scale: 2.5, duration: 1,
